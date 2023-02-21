@@ -1,4 +1,5 @@
-import { onCLS, onFCP, onFID, onLCP, onTTFB, type Metric } from "web-vitals";
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import { onCLS, onFCP, onFID, onLCP, onTTFB } from "web-vitals";
 
 const vitalsUrl = "https://vitals.vercel-analytics.com/v1/vitals";
 
@@ -10,7 +11,7 @@ function getConnectionSpeed() {
     : "";
 }
 
-function sendToAnalytics(metric: Metric, options: any) {
+function sendToAnalytics(metric, options) {
   const page = Object.entries(options.params).reduce(
     (acc, [key, value]) => acc.replace(value, `[${key}]`),
     options.path
@@ -45,7 +46,7 @@ function sendToAnalytics(metric: Metric, options: any) {
     });
 }
 
-export function webVitals(options: any) {
+export function webVitals(options) {
   try {
     onFID((metric) => sendToAnalytics(metric, options));
     onTTFB((metric) => sendToAnalytics(metric, options));
